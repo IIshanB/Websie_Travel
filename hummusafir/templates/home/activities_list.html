@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title %}Activities - Travel Website{% endblock %}
+
+{% block content %}
+<div class="text-center mb-3 pb-3">
+
+    <h1>Activities</h1>
+</div>
+<div class="activities-list">
+        {% for activity in activities %}
+            <div class="package-card">
+                {% if activity.image %}
+                    <img class="package_image"src="{{ activity.image.url }}" alt="{{ activity.name }}">
+                {% endif %}
+                <div class="activity-info">
+                    <h3>{{ activity.name }}</h3>
+                    <p class="package_description">{{ activity.description|truncatewords:20 }}</p>
+
+                </div>
+            </div>
+        {% empty %}
+        <p>No activities available at the moment.</p>
+    {% endfor %}
+</div>
+{% endblock %}

@@ -1,0 +1,162 @@
+{% extends 'base.html' %}
+
+{% block title %}Home - Travel Website{% endblock %}
+
+{% block content %}
+ {% load static %}
+<!-- Carousel Start -->
+    <div class="container-fluid p-0">
+        <div id="header-carousel" class="carousel slide" data-ride="carousel">
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img class="w-100" src="{% static 'home/img/carousel-11.jpg' %}" alt="Image">
+                    <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
+                        <div class="p-3" style="max-width: 900px;">
+                            <h4 class="text-white text-uppercase mb-md-3">Tours & Travel</h4>
+                            <h1 class="display-3 text-white mb-md-4">Let's Discover The World Together</h1>
+                            <a href="#" class="btn btn-primary py-md-3 px-md-5 mt-2">Book Now</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <img class="w-100" src="{% static 'home/img/carousel-2.jpg' %}" alt="Image">
+                    <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
+                        <div class="p-3" style="max-width: 900px;">
+                            <h4 class="text-white text-uppercase mb-md-3">Tours & Travel</h4>
+                            <h1 class="display-3 text-white mb-md-4">Discover Amazing Places With Us</h1>
+                            <a href="#" class="btn btn-primary py-md-3 px-md-5 mt-2">Book Now</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <a class="carousel-control-prev" href="#header-carousel" data-slide="prev">
+                <div class="btn btn-dark" style="width: 45px; height: 45px;">
+                    <span class="carousel-control-prev-icon mb-n2"></span>
+                </div>
+            </a>
+            <a class="carousel-control-next" href="#header-carousel" data-slide="next">
+                <div class="btn btn-dark" style="width: 45px; height: 45px;">
+                    <span class="carousel-control-next-icon mb-n2"></span>
+                </div>
+            </a>
+        </div>
+    </div>
+    <!-- Carousel End -->
+<section id="hero">
+    <h1>Welcome to Hummusafir Travels</h1>
+    <p>Your adventure starts here!</p>
+</section>
+
+<section id="featured-packages">
+    <div class="text-center mb-3 pb-3">
+        <h6 class="text-primary text-uppercase" style="letter-spacing: 5px;">Services</h6>
+        <h1>Packages</h1>
+    </div>
+    <div class="packages-list">
+        {% for package in featured_packages %}
+            <div class="package-card">
+                {% if package.image %}
+                    <img class="package_image" src="{{ package.image.url }}" alt="{{ package.name }}">
+                {% endif %}
+                <div>
+                    <div class="package-info">
+                      <span class="package_days">{{ package.get_packagedays }} days and {{ package.days }} nights</span>
+                        <span class="package_ratings">
+                        <span class="rating-stars">⭐️</span>
+                        <span class="review-rating">{{ package.review_rating }}</span>
+                        <span class="review-count">({{ package.reviews_count }})</span>
+                      </span>
+                    </div>
+
+                    <h6 class="package_title">{{ package.name }}</h6>
+                    <p class="package_description">{{ package.description|truncatewords:20 }}</p>
+
+
+                    <div class="price-container">
+                      <span class="price">₹{{ package.price }}</span>
+                      <span class="actual-price"><s>₹{{ package.actual_price }}</s></span>
+                        <span class="saved_price"> Save ₹{{ package.saved_amount }}</span>
+                    </div>
+                    <div class="contact_card">
+
+                            <a href="tel:+91 7210780678"><i class="fa fa-phone-alt mr-2" style ="color:#7AB730;"></i></a>
+
+                            <a href="https://wa.me/+919152336755?text=Thanks%20for%20showing%20interest%20in%20our%20{{package.name}}%20package.%20Our%20Team%20will%20shortly%20contact%20you." class="card_wa" style="background-color:#7AB730 ;">Whatsapp</a>
+
+
+                    </div>
+
+                    <a href="{% url 'travel_package_detail' pk=package.id %}">View Details</a>
+
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    <div class="view-more-container">
+    <a class="view-more" href="{% url 'packages_list' %}">View-More</a>
+        </div>
+</section>
+
+
+<h1></h1>
+
+<section id="featured-activities">
+
+    <div class="text-center mb-3 pb-3">
+        <h1></h1>
+        <h1>Activities</h1>
+    </div>
+    <div class="activities-list">
+        {% for activity in featured_activities %}
+            <div class="package-card">
+                {% if activity.image %}
+                    <img class="package_image"src="{{ activity.image.url }}" alt="{{ activity.name }}">
+                {% endif %}
+                <div class="activity-info">
+                    <h3>{{ activity.name }}</h3>
+                    <p class="package_description">{{ activity.description|truncatewords:20 }}</p>
+
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    <div class="view-more-container">
+    <a class="view-more" href="{% url 'activities_list' %}">View-More</a>
+        </div>
+</section>
+
+<div class="text-center mb-3 pb-3">
+        <h1></h1>
+        <h1>Team</h1>
+    </div>
+<div class="row">
+    {% for member in team_members %}
+    <div class="col-lg-3 col-md-4 col-sm-6 pb-2">
+        <div class="team-item bg-white mb-4">
+            <div class="team-img position-relative overflow-hidden">
+                <img class="img-fluid w-100" src="{{ member.image.url }}" alt="{{ member.name }}">
+                <div class="team-social position-absolute d-flex justify-content-center align-items-center h-100 w-100">
+                    {% if member.twitter_url %}
+                        <a class="btn btn-outline-primary btn-square mx-1" href="{{ member.twitter_url }}" target="_blank"><i class="fab fa-twitter"></i></a>
+                    {% endif %}
+                    {% if member.facebook_url %}
+                        <a class="btn btn-outline-primary btn-square mx-1" href="{{ member.facebook_url }}" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                    {% endif %}
+                    {% if member.instagram_url %}
+                        <a class="btn btn-outline-primary btn-square mx-1" href="{{ member.instagram_url }}" target="_blank"><i class="fab fa-instagram"></i></a>
+                    {% endif %}
+                    {% if member.linkedin_url %}
+                        <a class="btn btn-outline-primary btn-square mx-1" href="{{ member.linkedin_url }}" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="text-center py-4">
+                <h5 class="text-truncate">{{ member.name }}</h5>
+                <p class="m-0">{{ member.role }}</p>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+{% endblock %}

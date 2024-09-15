@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="itinerary-container">
+    <div class="row">
+        <div class="col-12">
+            <h2>{{ travel_package.name }} Itinerary</h2>
+            <p><strong>Days:</strong> {{ travel_package.days }} | <strong>Price:</strong> {{ travel_package.price }}</p>
+            <p>{{ travel_package.description }}</p>
+        </div>
+    </div>
+
+    <div class="row">
+        {% for itinerary in travel_package.itineraries.all %}
+            <div class="col-12 itinerary-day">
+                <h3>Day {{ itinerary.day_number }}: {{ itinerary.title }}</h3>
+                <p>{{ itinerary.description }}</p>
+
+                <!-- Image Gallery for Each Day -->
+                <div class="itinerary-images">
+                    <div class="row">
+                        {% for image in itinerary.images.all %}
+                            <div class="col-md-4">
+                                <div class="image-card">
+                                    <img src="{{ image.image.url }}" alt="{{ image.caption }}" class="zoomable-image">
+                                    {% if image.caption %}
+                                        <p class="caption">{{ image.caption }}</p>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+<div class="itinerary-contact">
+    <p class="contact-caption">Click to Contact</p>
+<div class="contact_card">
+
+                            <a href="tel:+91 7210780678"><i class="fa fa-phone-alt mr-2" style ="color:#7AB730;"></i></a>
+
+                            <a href="https://wa.me/+919152336755?text=Thanks%20for%20showing%20interest%20in%20our%20{{travel_package.name}}%20package.%20Our%20Team%20will%20shortly%20contact%20you." class="card_wa" style="background-color:#7AB730 ;">Whatsapp</a>
+
+
+                    </div>
+    </div>
+{% endblock %}

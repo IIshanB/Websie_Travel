@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block title %}Travel Packages - Travel Website{% endblock %}
+
+{% block content %}
+<div class="text-center mb-3 pb-3">
+
+    <h1>Packages</h1>
+</div>
+<div class="packages-list">
+        {% for package in packages %}
+            <div class="package-card">
+                {% if package.image %}
+                    <img class="package_image" src="{{ package.image.url }}" alt="{{ package.name }}">
+                {% endif %}
+                <div>
+                    <div class="package-info">
+                      <span class="package_days">{{ package.get_packagedays }} days and {{ package.days }} nights</span>
+                        <span class="package_ratings">
+                        <span class="rating-stars">⭐️</span>
+                        <span class="review-rating">{{ package.review_rating }}</span>
+                        <span class="review-count">({{ package.reviews_count }})</span>
+                      </span>
+                    </div>
+
+                    <h6 class="package_title">{{ package.name }}</h6>
+                    <p class="package_description">{{ package.description|truncatewords:20 }}</p>
+
+
+                    <div class="price-container">
+                      <span class="price">₹{{ package.price }}</span>
+                      <span class="actual-price"><s>₹{{ package.actual_price }}</s></span>
+                        <span class="saved_price"> Save ₹{{ package.saved_amount }}</span>
+                    </div>
+                    <div class="contact_card">
+
+                            <a href="tel:+91 7210780678"><i class="fa fa-phone-alt mr-2" style ="color:#7AB730;"></i></a>
+
+                            <a href="https://wa.me/+919152336755?text=Thanks%20for%20showing%20interest%20in%20our%20{{package.name}}%20package.%20Our%20Team%20will%20shortly%20contact%20you." class="card_wa" style="background-color:#7AB730 ;">Whatsapp</a>
+
+
+                    </div>
+                    <a href="{% url 'travel_package_detail' pk=package.id %}">View Details</a>
+
+
+                </div>
+            </div>
+
+        {% empty %}
+        <p>No travel packages available at the moment.</p>
+    {% endfor %}
+</div>
+{% endblock %}
