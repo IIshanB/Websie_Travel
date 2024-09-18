@@ -61,6 +61,7 @@ class TravelPackage(models.Model):
 class TeamMember(models.Model):
     name = models.CharField(max_length=100)
     role = models.CharField(max_length=100)
+    description = models.TextField(blank=True)
     image = models.ImageField(upload_to='team_images/')
     twitter_url = models.URLField(blank=True, null=True)
     facebook_url = models.URLField(blank=True, null=True)
@@ -74,7 +75,7 @@ class TeamMember(models.Model):
         img = Image.open(self.image)
 
         # Resize the image to a specific size (e.g., 800x600)
-        if img.height > 600 or img.width > 800:
+        if img.height > 10 or img.width > 10:
             output_size = (340, 340)
             img = img.resize(output_size, Image.Resampling.LANCZOS)
 
